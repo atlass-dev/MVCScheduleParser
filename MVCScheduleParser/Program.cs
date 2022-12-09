@@ -1,7 +1,12 @@
+using MVCScheduleParser.Config;
+using MVCScheduleParser.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.Configure<APIConfiguration>(builder.Configuration.GetSection("APIs"));
+builder.Services.AddScoped<IScheduleResolver,ScheduleResolver>();
 
 var app = builder.Build();
 

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MVCScheduleParser.Models;
+using MVCScheduleParser.Models.ScheduleModels;
+using MVCScheduleParser.Services;
 using System.Diagnostics;
 
 namespace MVCScheduleParser.Controllers
@@ -7,10 +9,12 @@ namespace MVCScheduleParser.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IScheduleResolver _scheduleResolver;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IScheduleResolver scheduleResolver)
         {
             _logger = logger;
+            _scheduleResolver = scheduleResolver;
         }
 
         public IActionResult Index()
@@ -18,10 +22,10 @@ namespace MVCScheduleParser.Controllers
             return View();
         }
 
-        public IActionResult Schedule(string group)
+        public async Task<IActionResult> Schedule(string group)
         {
-            _logger.LogInformation(group);
-            return View((object)group);
+            var schedule = await _scheduleResolver.GetSchedule(group, "05.12.2022", "11.12.2022");
+            return View(schedule);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
