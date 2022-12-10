@@ -1,7 +1,70 @@
-﻿@model Weekday[]
+﻿@model List<Weekday>
 
 @{
     ViewData["Title"] = "Schedule";   
 }
 
-<h1>@Model</h1>
+<table>
+    <tbody>
+        @foreach (var day in @Model)
+        {
+            <div class="day">
+            <tr>
+                <th width=\"55\">Пара</th>
+                <th width=\"105\">Время</th>
+                <th>Предмет</th>
+                <th width=\"180\">Преподаватель</th>
+                <th width=\"105\">Аудитория</th>
+                <th width=\"150\">Группа</th>
+            </tr>
+        
+            @{
+                byte pairCount = 0;
+            }
+
+            @foreach(var pair in day.pairs)
+            {
+                pairCount++;
+
+                if (pairCount > 8) 
+                    break;
+
+                <tr>
+                    <td>@pair.N</td>
+                    <td>@pair.time</td>
+
+                    <td>
+                        @foreach (var schedulePair in pair.schedulePairs)
+                        {
+                            <div>@schedulePair.subject</div>
+                        }
+                    </td>
+
+                    <td>
+                        @foreach (var schedulePair in pair.schedulePairs)
+                        {
+                            <div>@schedulePair.teacher</div>
+                        }
+                    </td>
+
+                    <td>
+                        @foreach (var schedulePair in pair.schedulePairs)
+                        {
+                             <div>@schedulePair.aud</div>
+                        }
+                    </td>
+
+                    <td>
+                        @foreach (var schedulePair in pair.schedulePairs)
+                        {
+                             <div>@schedulePair.group</div>
+                        }
+                    </td>
+                    
+                </tr>
+                
+            }
+            </div>
+        } 
+    </tbody>
+</table>

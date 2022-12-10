@@ -15,13 +15,13 @@ namespace MVCScheduleParser.Services
             _logger = logger;
         }
 
-        public async Task<Weekday[]> GetSchedule(string group, string startDate, string endDate)
+        public async Task<List<Weekday>> GetSchedule(string group, string startDate, string endDate)
         {
             _logger.LogInformation(_config.ScheduleAPI);
 
             string serverResponse = await GetServerResponse(group, startDate, endDate);
 
-            Weekday[] schedule = DeserializeSchedule(serverResponse);
+            List<Weekday> schedule = DeserializeSchedule(serverResponse).ToList();
 
             return  schedule;
         }
