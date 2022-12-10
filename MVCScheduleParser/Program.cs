@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<APIConfiguration>(builder.Configuration.GetSection("APIs"));
 builder.Services.AddScoped<IScheduleResolver,ScheduleResolver>();
+builder.Services.AddScoped<IWeekdayDeterminant, WeekdayDeterminant>();
 
 var app = builder.Build();
 

@@ -10,11 +10,15 @@ namespace MVCScheduleParser.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IScheduleResolver _scheduleResolver;
+        private readonly IWeekdayDeterminant _weekdayDeterminant;
 
-        public HomeController(ILogger<HomeController> logger, IScheduleResolver scheduleResolver)
+        public HomeController(ILogger<HomeController> logger, 
+            IScheduleResolver scheduleResolver, 
+            IWeekdayDeterminant weekdayDeterminant)
         {
             _logger = logger;
             _scheduleResolver = scheduleResolver;
+            _weekdayDeterminant = weekdayDeterminant;
         }
 
         public IActionResult Index()
@@ -24,7 +28,9 @@ namespace MVCScheduleParser.Controllers
 
         public async Task<IActionResult> Schedule(string group)
         {
-            var schedule = await _scheduleResolver.GetSchedule(group, "05.12.2022", "11.12.2022");
+            var schedule = await _scheduleResolver.GetSchedule(group,
+                _weekdayDeterminant.GetFirstDayOfWeek().ToShortDateString(), 
+                _weekdayDeterminant.GetLastDayOfWeek().ToShortDateString());
             return View(schedule);
         }
 
