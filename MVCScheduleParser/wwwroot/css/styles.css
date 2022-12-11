@@ -84,6 +84,10 @@ table {
     border: none;
 }
 
-.day{
-    margin-bottom: 10px;
+td.day {
+    background: #b6d7ff !important;
+    color: #154353 !important;
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    height: 18px;
+    text-align: center !important;
 }

@@ -7,8 +7,10 @@
 <table>
     <tbody>
         @foreach (var day in @Model)
-        {
-            <div class="day">
+        {         
+            <tr>
+                <td colspan="6" class="day current-day-0">@day.date - @day.weekDay</td>
+            </tr>
             <tr>
                 <th width=\"55\">Пара</th>
                 <th width=\"105\">Время</th>
@@ -18,15 +20,13 @@
                 <th width=\"150\">Группа</th>
             </tr>
         
-            @{
                 byte pairCount = 0;
-            }
 
-            @foreach(var pair in day.pairs)
+            @foreach (var pair in day.pairs)
             {
                 pairCount++;
 
-                if (pairCount > 8) 
+                if (pairCount > 8)
                     break;
 
                 <tr>
@@ -50,21 +50,19 @@
                     <td>
                         @foreach (var schedulePair in pair.schedulePairs)
                         {
-                             <div>@schedulePair.aud</div>
+                            <div>@schedulePair.aud</div>
                         }
                     </td>
 
                     <td>
                         @foreach (var schedulePair in pair.schedulePairs)
                         {
-                             <div>@schedulePair.group</div>
+                            <div>@schedulePair.group</div>
                         }
                     </td>
-                    
+
                 </tr>
-                
             }
-            </div>
         } 
     </tbody>
 </table>
